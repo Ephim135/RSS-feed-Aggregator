@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func Read() config {
+func Read() (*Config, error) {
 	path, err := getConfigFilePath()
 	if err != nil {
 		log.Fatalf("cant get config file path: %v", err)
@@ -16,10 +16,10 @@ func Read() config {
 		log.Fatalf("unable to read file: %v", err)
 	}
 
-	var cfg config
+	var cfg *Config
 	err = json.Unmarshal([]byte(data), &cfg)
 	if err != nil {
 		log.Fatalf("cant Unmarshal json: %v", err)
 	}
-	return cfg
+	return cfg, nil
 }

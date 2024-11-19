@@ -8,21 +8,21 @@ import (
 
 const configFileName = ".gatorconfig.json"
 
-func (cfg config) SetUser(current_user_name string) {
+func (cfg *Config) SetUser(current_user_name string) error {
 	cfg.CurrentUserName = current_user_name
-	write(cfg)
+	return write(*cfg)
 }
 
 func getConfigFilePath() (string, error) {
-	wd, err := os.Getwd()
+	home, err := os.UserHomeDir()
 	if err != nil {
 		return "", err
 	}
-	path := filepath.Join(wd, "gatorconfig.json")
+	path := filepath.Join(home, configFileName)
 	return path, nil
 }
 
-func write(cfg config) error {
+func write(cfg Config) error {
 	path, err := getConfigFilePath()
 	file, err := os.Create(path)
 	if err != nil {
