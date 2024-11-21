@@ -48,3 +48,21 @@ func printFeed(feed database.Feed) {
 	fmt.Printf("* URL:           %s\n", feed.Url)
 	fmt.Printf("* UserID:        %s\n", feed.UserID)
 }
+
+func feed(s *state, cmd command) error {
+	if len(cmd.args) != 0 {
+		return fmt.Errorf("usage: %s does not need argument", cmd.name)
+	}
+
+	feedrows, err := s.db.Feed(context.Background())
+	if err != nil {
+		return fmt.Errorf("couldnt read feed data")
+	}
+	for _, feed := range feedrows {
+		fmt.Printf("Feed Name: %v\n", feed.FeedsName)
+		fmt.Printf("url: %v\n", feed.Url)
+		fmt.Printf("User Name: %v\n", feed.UserName)
+		fmt.Printf("===============================\n\n")
+	}
+	return nil
+}
