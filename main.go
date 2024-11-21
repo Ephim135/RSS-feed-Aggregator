@@ -35,6 +35,7 @@ func main() {
 	cmds.register("reset", reset)
 	cmds.register("users", users)
 	cmds.register("agg", agg)
+	cmds.register("addfeed", addfeed)
 
 	args := os.Args
 	if len(args) < 2 {
