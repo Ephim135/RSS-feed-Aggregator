@@ -9,16 +9,11 @@ import (
 	"github.com/google/uuid"
 )
 
-func follow(s *state, cmd command) error {
+func follow(s *state, cmd command, user database.User) error {
 	if len(cmd.args) != 1 {
 		return fmt.Errorf("usage: %v <name> <url>", cmd.name)
 	}
 	url := cmd.args[0]
-
-	user, err := s.db.GetUser(context.Background(), s.cfg.CurrentUserName)
-	if err != nil {
-		return fmt.Errorf("cant get User by name")
-	}
 
 	feed, err := s.db.GetFeedByURL(context.Background(), url)
 	if err != nil {
@@ -42,13 +37,7 @@ func follow(s *state, cmd command) error {
 	return nil
 }
 
-func following(s *state, cmd command) error {
-
-	user, err := s.db.GetUser(context.Background(), s.cfg.CurrentUserName)
-	if err != nil {
-		return fmt.Errorf("cant get User by name")
-	}
-
+func following(s *state, cmd command, user database.User) error {
 	followRows, err := s.db.GetFeedFollowsForUser(context.Background(), user.ID)
 	if err != nil {
 		return err
@@ -57,5 +46,21 @@ func following(s *state, cmd command) error {
 		fmt.Printf("Feed Names: %v\n", follow.FeedName)
 	}
 	fmt.Println("======================")
+	return nil
+}
+
+func unfollow(s *state, cmd command, user database.User) error {
+	if len(cmd.args) != 1 {
+		return fmt.Errorf("usage: %v <name> <url>", cmd.name)
+	}
+	url := cmd.args[0]
+
+	err := s.db.DeleteFeedFollows(context.Background(), database.DeleteFeedFollowsParams{
+		Name: user.Name,
+		Url:  url,
+	})
+	if err != nil {
+		return fmt.Errorf("Failed deleting follow")
+	}
 	return nil
 }
