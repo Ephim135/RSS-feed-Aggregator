@@ -8,6 +8,7 @@ goose postgres postgres://fabian:interfeci47@localhost:5432/gator?sslmode=disabl
 goose postgres postgres://fabian:interfeci47@localhost:5432/gator?sslmode=disable down
 goose postgres postgres://fabian:interfeci47@localhost:5432/gator?sslmode=disable down
 goose postgres postgres://fabian:interfeci47@localhost:5432/gator?sslmode=disable down
+goose postgres postgres://fabian:interfeci47@localhost:5432/gator?sslmode=disable down
 
 # Command 2
 echo "Running second command"

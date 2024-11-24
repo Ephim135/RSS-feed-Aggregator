@@ -40,6 +40,7 @@ func main() {
 	cmds.register("follow", middlewareLoggedIn(follow))
 	cmds.register("following", middlewareLoggedIn(following))
 	cmds.register("unfollow", middlewareLoggedIn(unfollow))
+	cmds.register("browse", middlewareLoggedIn(browse))
 
 	args := os.Args
 	if len(args) < 2 {

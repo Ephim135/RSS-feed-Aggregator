@@ -44,8 +44,6 @@ func agg(s *state, cmd command) error {
 	for ; ; <-ticker.C {
 		scrapeFeeds(s)
 	}
-
-	return nil
 }
 
 func fetchFeed(ctx context.Context, feedURL string) (*RSSFeed, error) {
